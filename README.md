@@ -1,13 +1,25 @@
-# UCL Assistant
+# Notifications
 
-One app to manage your life at UCL.
+A server that manages push notifications for the UCL Assistant API.
 
-<!-- ![](./app/assets/images/icon.png) -->
+## Database
 
-## Repository Contents
+Maps a list of UCL Unique Person Identifiers (UPIs) to Exponent notification
+push tokens.
 
-* `/app` - UCL Assistant app. Written with React Native, requires Expo to run.
+These can then be called on to push notifications to a user, if they have
+notifications enabled. This data is stored in a PostgreSQL database, the login
+details for which are provided by environment variables.
 
-* `/server` - API server, with Docker image ready to go.
+## API Endpoints
 
-* `/deployment` - Deployment config files (e.g. Kubernetes)
+* `POST /register` - registers a user for notifications. Requires a `upi` and a
+  `pushToken`, provided as JSON keys. Can be used to overwrite old entries too.
+
+* `POST /upi/xxx/` - send a push notification to the specified UPI. Requires a
+  JSON object as body, with `title`, `content`, and `type` parameters. Returns
+  200 if notifcation sent, returns 404 if that user is not registered for
+  notifications.
+
+* `DELETE /upi/xxx/` - removes a user from the notifications system. Deletes the
+  notification entry from the database entirely.

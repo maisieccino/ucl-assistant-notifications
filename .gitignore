@@ -1,9 +1,4 @@
-app/node_modules
-app/.expo
-app/app.json
 node_modules
-**/node_modules
-**/*.env
-**/*.eslintcache
-**/yarn-error.log
-**/__snapshots__
+*.env
+.eslintcache
+yarn-error.log
